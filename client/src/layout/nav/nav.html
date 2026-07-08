@@ -1,0 +1,61 @@
+<!-- header.component.html -->
+<header class="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md shadow-lg z-50 px-6 py-3 flex items-center justify-between flex-wrap gap-4">
+  <!-- Brand -->
+  <h1 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">
+    ❤️ Dating App
+  </h1>
+
+  <!-- Navigation -->
+  <nav class="flex items-center gap-6 text-sm font-medium text-gray-700">
+    <a routerLink="/" routerLinkActive="text-pink-600" class="hover:text-pink-500 transition-colors">Matches</a>
+    <a routerLink="/lists" routerLinkActive="text-pink-600" class="hover:text-pink-500 transition-colors">Lists</a>
+    <a routerLink="/messages" routerLinkActive="text-pink-600" class="hover:text-pink-500 transition-colors">Messages</a>
+  </nav>
+  @if(accountService.currentUser(); as user){
+
+      <div class="dropdown">
+        <div tabindex="0" role="button" class="btn m-1">
+          <img src="/user.png" alt="User Avatar" class="w-8 h-8 rounded-full" />
+          <span class="ml-2" >{{ user.displayName }}</span>
+        </div>
+        <ul tabindex="-1" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+          <li><a>Edit Profile</a></li>
+          <li><a #logoutLink (click)="logout()">Logout</a></li>
+        </ul>
+      </div>
+  }@else {
+
+      <!-- Login Form -->
+      <form #loginForm="ngForm" (ngSubmit)="login()" class="flex items-center gap-3">
+        <div class="relative">
+          <span  class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">📧</span>
+          <input
+            type="email"
+            name="email"
+            [(ngModel)]="creds.email"
+            required
+            placeholder="Email"
+            class="pl-9 pr-4 py-2 rounded-full border border-gray-200 focus:border-pink-400 focus:ring-2 focus:ring-pink-200 outline-none transition w-40 md:w-48"
+          />
+        </div>
+        <div class="relative">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔒</span>
+          <input
+            type="password"
+            name="password"
+            [(ngModel)]="creds.password"
+            required
+            placeholder="Password"
+            class="pl-9 pr-4 py-2 rounded-full border border-gray-200 focus:border-pink-400 focus:ring-2 focus:ring-pink-200 outline-none transition w-40 md:w-48"
+          />
+        </div>
+        <button
+          type="submit"
+          
+          class="px-6 py-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Login
+        </button>
+      </form>
+  }
+</header>
